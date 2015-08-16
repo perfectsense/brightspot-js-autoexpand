@@ -30,7 +30,16 @@
         },
 
         '_each': function(input) {
+            if (this._data(input, SHADOW_DATA_KEY)) {
+                return;
+            }
+
             var $input = $(input);
+
+            if (!$input.is(':visible')) {
+                return;
+            }
+
             var display = $input.css('display');
             var $element = $('<div/>');
             var inputCss;
@@ -69,7 +78,7 @@
             });
         },
 
-        '_all': function(inputs) {
+        '_all': function(inputs, inExpand) {
             var plugin = this;
             var $inputs = $(inputs);
 
@@ -88,18 +97,29 @@
             }
 
             $inputs.each(function() {
-                var $element = plugin._data(this, SHADOW_DATA_KEY).$element;
+                var shadow = plugin._data(this, SHADOW_DATA_KEY);
 
-                $shadowContainer.append($element);
+                if (shadow && !shadow.elementAppended) {
+                    $shadowContainer.append(shadow.$element);
+                    shadow.elementAppended = true;
+                }
             });
 
-            plugin.expand(inputs);
+            if (!inExpand) {
+                plugin.expand(inputs);
+            }
         },
 
         'expand': function(inputs) {
             var plugin = this;
             var $inputs = $(inputs);
             var shadows = [ ];
+
+            $inputs.each(function() {
+                plugin._each(this);
+            });
+
+            plugin._all(inputs, true);
 
             // Group reads and writes together across multiple inputs to
             // minimize forced synchronous layouts.
