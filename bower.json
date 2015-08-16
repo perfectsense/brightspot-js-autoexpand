@@ -1,8 +1,10 @@
 {
-  "authors": [ {
-    "homepage": "http://www.perfectsensedigital.com/",
-    "name": "Perfect Sense Digital"
-  } ],
+  "authors": [
+    {
+      "homepage": "http://www.perfectsensedigital.com/",
+      "name": "Perfect Sense Digital"
+    }
+  ],
   "dependencies": {
     "jquery": ">=1.7.0",
     "bsp-utils": ">=1.0.0"
@@ -15,5 +17,5 @@
   "license": "MIT",
   "main": "bsp-autoexpand.js",
   "name": "bsp-autoexpand",
-  "version": "1.0.0"
+  "version": "1.0.2"
 }
